@@ -66,13 +66,16 @@ module.exports = (server) => {
     clients[socket.id] = true;
     socket.emit('game-state', gameState);
     socket.on('collect-dung', ({ id }) => {
-      gameState.dungCollected += 1;
-      gameState.dungs = gameState.dungs.filter((dung) => dung.id !== id);
-      gameState.dungs.push({
-        id: gameState.dungs[gameState.dungs.length - 1].id + 1,
-        location: getRandomLocation(),
-      });
-      hasUpdate = true;
+      const dungIndex = gameState.dungs.findIndex((dung) => dung.id !== id);
+      if (dungIndex !== -1) {
+        gameState.dungs.splice(dungIndex, 1);
+        gameState.dungCollected += 1;
+        gameState.dungs.push({
+          id: gameState.dungs[gameState.dungs.length - 1].id + 1,
+          location: getRandomLocation(),
+        });
+        hasUpdate = true;
+      }
     });
     socket.on('disconnect', () => {
       delete clients[socket.id];
