@@ -49,6 +49,7 @@ body {
   top: 4vh;
   right: 4vw;
   font-size: 4vw;
+  z-index: 99999;
 }
 
 .score .value {
