@@ -9,7 +9,7 @@ function getRandomLocation() {
 
 module.exports = (server) => {
   const io = SocketIO(server);
-
+  const clients = {};
   const gameState = {
     dungCollected: 0,
     animals: [{
@@ -62,6 +62,8 @@ module.exports = (server) => {
 
   let hasUpdate = false;
   io.on('connection', (socket) => {
+    console.log('Connected clients', Object.keys(clients).length);
+    clients[socket.id] = true;
     socket.emit('game-state', gameState);
     socket.on('collect-dung', ({ id }) => {
       gameState.dungCollected += 1;
@@ -71,6 +73,9 @@ module.exports = (server) => {
         location: getRandomLocation(),
       });
       hasUpdate = true;
+    });
+    socket.on('disconnect', () => {
+      delete clients[socket.id];
     });
   });
 
