@@ -1,0 +1,15 @@
+
+@font-face {
+  font-family: 'FirefoxEmoji';
+  src: url('FirefoxEmoji.eot?#iefix') format('embedded-opentype'),  url('FirefoxEmoji.woff') format('woff'), url('FirefoxEmoji.ttf')  format('truetype'), url('FirefoxEmoji.svg#FirefoxEmoji') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'HogfishDEMO';
+  src: url('HogfishDEMO.eot?#iefix') format('embedded-opentype'),  url('HogfishDEMO.otf')  format('opentype'),
+	     url('HogfishDEMO.woff') format('woff'), url('HogfishDEMO.ttf')  format('truetype'), url('HogfishDEMO.svg#HogfishDEMO') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
