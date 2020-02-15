@@ -1,0 +1,33 @@
+{
+  "name": "dunghero.online",
+  "version": "1.0.0",
+  "description": "A collaborative multiple player online game where YOU can be a dung hero by collecting all the dung created by the animals.",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "lint": "eslint src/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CodingGarden/dunghero.online.git"
+  },
+  "keywords": [],
+  "author": "CJ R. <cj@null.computer> (https://w3cj.now.sh)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/CodingGarden/dunghero.online/issues"
+  },
+  "homepage": "https://github.com/CodingGarden/dunghero.online#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "morgan": "^1.9.1",
+    "socket.io": "^2.3.0"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.20.1",
+    "nodemon": "^2.0.2"
+  }
+}
