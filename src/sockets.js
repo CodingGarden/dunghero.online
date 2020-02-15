@@ -66,7 +66,7 @@ module.exports = (server) => {
     clients[socket.id] = true;
     socket.emit('game-state', gameState);
     socket.on('collect-dung', ({ id }) => {
-      const dungIndex = gameState.dungs.findIndex((dung) => dung.id !== id);
+      const dungIndex = gameState.dungs.findIndex((dung) => dung.id === id);
       if (dungIndex !== -1) {
         gameState.dungs.splice(dungIndex, 1);
         gameState.dungCollected += 1;
