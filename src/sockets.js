@@ -64,8 +64,10 @@ module.exports = (server) => {
   io.on('connection', (socket) => {
     console.log('Connected clients', Object.keys(clients).length);
     clients[socket.id] = true;
+    const lastCollected = Date.now();
     socket.emit('game-state', gameState);
     socket.on('collect-dung', ({ id }) => {
+      if (Date.now() - lastCollected < 1000) return;
       const dungIndex = gameState.dungs.findIndex((dung) => dung.id === id);
       if (dungIndex !== -1) {
         gameState.dungs[dungIndex].location = getRandomLocation();

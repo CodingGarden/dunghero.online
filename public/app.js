@@ -10,10 +10,6 @@ function collectDung(dung) {
     socket.emit('collect-dung', {
       id: dung.id,
     });
-    if (dungsById[dung.id]) {
-      dungsById[dung.id].remove();
-      delete dungsById[dung.id];
-    }
   };
 }
 
