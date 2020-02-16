@@ -1,9 +1,12 @@
 const zoo = document.querySelector('.zoo');
 const scoreElement = document.querySelector('.score .value');
+const leaderboardElement = document.querySelector('.score .leaderboard');
+const yourScoreElement = document.querySelector('.score .your-score')
 const socket = io();
 
 const animalsById = {};
 const dungsById = {};
+const leaderboardsById = {};
 
 function removeDung(dung) {
   dung.classList.add('shrink');
@@ -85,3 +88,47 @@ function updateView(gameState) {
 }
 
 socket.on('game-state', updateView);
+
+const inputName = document.getElementById('input-name');
+const welcome = document.getElementById('welcome-screen');
+inputName.addEventListener('keyup', (e) => {
+  if (e.key === "Enter") {
+    const name = e.target.value;
+    if (name != "") {
+      socket.emit('input-name', name);
+      welcome.style.display = "none";
+    }
+  }
+});
+
+function updateScore(score) {
+  yourScoreElement.textContent = 'YOUR SCORE: ' + score;
+}
+
+socket.on('score', updateScore);
+
+function updateLeaderboard(leaderboard) {
+  leaderboard.forEach((player, index) => {
+    const text = index+1 + '. ' + player.name + ': ' + player.score;
+    if (!leaderboardsById[index]) {
+      const listElement = document.createElement('li');
+      leaderboardsById[index] = listElement;
+      leaderboardElement.appendChild(listElement);
+    }
+    const listElement = leaderboardsById[index];
+    // marks the score if it's your score
+    if (socket.id == player.id) {
+      if (!listElement.classList.contains('highlight')) {
+        listElement.classList.add('highlight');
+      }
+    } else {
+      if (listElement.classList.contains('highlight')) {
+        listElement.classList.remove('highlight');
+      }
+    }
+    // set the score
+    listElement.textContent = text;
+  });
+}
+
+socket.on('leaderboard', updateLeaderboard);

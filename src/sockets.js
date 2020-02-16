@@ -33,6 +33,25 @@ function createDung(location) {
   };
 }
 
+function leaderboard(clients) {
+  const sortable = [];
+  for (const id in clients) {
+    const client = clients[id];
+    if (client.name !== "") {
+      sortable.push({
+        id: id,
+        name: client.name,
+        score: client.score,
+      });
+    }
+  }
+  sortable.sort((a, b) => {
+    return b.score - a.score;
+  });
+  // only top 10 are getting sent
+  return sortable.slice(0, 10);
+}
+
 module.exports = (server) => {
   const io = SocketIO(server);
   const clients = {};
@@ -50,24 +69,27 @@ module.exports = (server) => {
 
   let hasUpdate = false;
   io.on('connection', (socket) => {
+    clients[socket.id] = {name: '', score: 0};
     console.log('Connected clients', Object.keys(clients).length);
-    clients[socket.id] = true;
-    let lastCollected = Date.now();
+    const lastCollected = Date.now();
     socket.emit('game-state', gameState);
-    socket.on('collect-dung', ({
-      id,
-    }) => {
+    socket.emit('leaderboard', leaderboard(clients));
+    socket.on('collect-dung', ({ id }) => {
       if (Date.now() - lastCollected < 1000) return;
       const foundIndex = gameState.dungs.findIndex((dung) => dung.id === id);
       if (foundIndex !== -1) {
         gameState.dungs.splice(foundIndex, 1);
         gameState.dungCollected += 1;
         hasUpdate = true;
-        lastCollected = Date.now();
+        clients[socket.id].score += 1;
+        socket.emit('score', clients[socket.id].score);
       }
     });
     socket.on('disconnect', () => {
       delete clients[socket.id];
+    });
+    socket.on('input-name', (name) => {
+      clients[socket.id].name = name;
     });
   });
 
@@ -94,6 +116,7 @@ module.exports = (server) => {
     });
     if (hasUpdate) {
       io.emit('game-state', gameState);
+      io.emit('leaderboard', leaderboard(clients));
       hasUpdate = false;
     }
   }, 300);
