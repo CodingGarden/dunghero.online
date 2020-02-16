@@ -25,15 +25,20 @@ body {
 
 .animal {
   font-size: 13vmin;
+  pointer-events: none;
+  z-index: 10;
 }
 
 .dung {
+  opacity: 0.8;
   font-size: 6vmin;
   cursor: pointer;
+  z-index: 2;
+  animation: grow 1s forwards;
 }
 
-.bounce {
-  animation: bounce 300ms alternate ease-in-out infinite;
+.dung.shrink {
+  animation: shrink 1s forwards;
 }
 
 @keyframes bounce {
@@ -45,12 +50,40 @@ body {
   }
 }
 
+@keyframes flip-bounce {
+  0% {
+    transform: scaleX(-1) translate(-50%, -50%) translateY(-2vmin);
+  }
+  100% {
+    transform: scaleX(-1) translate(-50%, -50%) translateY(2vmin);
+  }
+}
+
+@keyframes grow {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes shrink {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+
 .score {
   position: fixed;
   top: 4vh;
   right: 4vw;
   font-size: 4vw;
   z-index: 99999;
+  pointer-events: none;
 }
 
 .score .value {
@@ -63,7 +96,8 @@ body {
   height: 20vh;
   display: flex;
   justify-content: center;
-  width: 100%;  
+  width: 100%;
+  pointer-events: none;
 }
 
 .fence img {
