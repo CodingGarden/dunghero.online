@@ -9,10 +9,21 @@
   <script src="/socket.io/socket.io.js"></script>
 </head>
 <body>
+  <div id="welcome-screen" class="welcome">
+    <div class="dung-name">
+      <input id="input-name" type="text" autofocus placeholder="Your 💩 Name">
+      <p>press enter to start collecting dung</p>
+    </div>
+  </div>
   <div class="zoo">
     <div class="score">
-      <span>DUNG COLLECTED:</span>
+      <span>TOTAL DUNG COLLECTED:</span>
       <span class="value">0</span>
+      <br>
+      <span class="your-score">YOUR SCORE: 0</span>
+      <ul class="leaderboard">
+        <span>LEADERBOARD</span>
+      </ul>
     </div>
     <div class="fence">
       <img src="images/fence.png">

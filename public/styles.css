@@ -9,6 +9,33 @@ body {
   font-family: HogfishDEMO !important;
 }
 
+.welcome {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 99999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dung-name {
+  font-size: 50px;
+  color: white;
+}
+
+.dung-name input {
+  font-size: 35px;
+  text-align: center;
+}
+
+.dung-name p {
+  font-size: x-small;
+  text-align: center;
+  padding-top: 10px;
+}
+
 .zoo {
   width: 100vw;
   height: 100vh;
@@ -81,13 +108,31 @@ body {
   position: fixed;
   top: 4vh;
   right: 4vw;
-  font-size: 4vw;
+  font-size: 2vw;
   z-index: 99999;
   pointer-events: none;
 }
 
 .score .value {
   color: brown;
+}
+
+.score .leaderboard {
+  list-style: none;
+  font-size: 1vw;
+}
+
+.score .leaderboard li {
+  padding: 2px 0px;
+}
+
+.highlight {
+  color: brown;
+}
+
+.score .your-score {
+  color: brown;
+  font-size: medium;
 }
 
 .fence {
